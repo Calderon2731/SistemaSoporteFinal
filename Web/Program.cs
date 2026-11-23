@@ -31,6 +31,10 @@ builder.Services.AddTransient<TokenApiHandler>();
 builder.Services.AddHttpClient<ITicketsApi, TicketsApi>(ConfigurarCliente)
     .AddHttpMessageHandler<TokenApiHandler>();
 
+// Cliente de etiquetas: SÍ lleva el handler para enviar el token en cada llamada al API.
+builder.Services.AddHttpClient<IEtiquetasApi, EtiquetasApi>(ConfigurarCliente)
+    .AddHttpMessageHandler<TokenApiHandler>();
+
 // Cliente de cuenta: NO lleva el handler (para hacer login todavía no hay token).
 builder.Services.AddHttpClient<ICuentaApi, CuentaApi>(ConfigurarCliente);
 
