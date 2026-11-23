@@ -1,0 +1,15 @@
+@using System.Globalization
+@using System.Text.RegularExpressions
+@model EtiquetaVm
+@{
+    // Lógica pura de presentación: valida formato hex y elige texto claro u oscuro según luminancia.
+    var esHexValido = !string.IsNullOrWhiteSpace(Model.Color) && Regex.IsMatch(Model.Color, "^#[0-9a-fA-F]{6}$");
+    var fondo = esHexValido ? Model.Color : "#6c757d";
+
+    var r = int.Parse(fondo.Substring(1, 2), NumberStyles.HexNumber);
+    var g = int.Parse(fondo.Substring(3, 2), NumberStyles.HexNumber);
+    var b = int.Parse(fondo.Substring(5, 2), NumberStyles.HexNumber);
+    var luminancia = (0.299 * r) + (0.587 * g) + (0.114 * b);
+    var texto = luminancia > 160 ? "#212529" : "#ffffff";
+}
+<span class="badge" style="background-color: @fondo; color: @texto;">@Model.Nombre</span>
